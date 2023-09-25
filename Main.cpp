@@ -3,6 +3,7 @@
 
 //#####################################################
 
+//Coded by Okamitk (Francisco Felipe) on GitHub
 //The game is set on a matrix called world
 //Every space in world is called a block
 //A block can contain a mine or a treasure or nothing
@@ -69,7 +70,7 @@ void deathDialog(int chance){
         "| |_\\ \\ (_| | | | | | |  __/ \\ \\_/ /\\ V /  __/ |   \n"
         " \\____/\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_|         \n"
         "";
-    std::cout << END << END << Dialogs[chance] << END;
+    std::cout << Dialogs[chance] << END;
 };
 
 void digDialog(){
@@ -81,7 +82,7 @@ void digDialog(){
                 "Cavando por vários minutos, a única coisa que você encontrou foi terra e pedras, muitas pedras.",
                 "Você cavou, mas não há nada valioso."
             };
-    std::cout << END << END << Dialogs[random(0,4)] << END;
+    std::cout << END << END << END << END << END << Dialogs[random(0,4)] << END;
 };
 
 void nearDangerDialog(int chance){
@@ -93,7 +94,7 @@ void nearDangerDialog(int chance){
                 "Há polvora misturada na areia que você acabou de cavar. Tem um bomba por perto",
                 "Você bateu forte demais com a pá e sentiu o chão tremer, uma mina explodiu por perto."
             };
-    std::cout << END << END << Dialogs[chance] << END;
+    std::cout << END << END << END << END << END << Dialogs[chance] << END;
 };
 
 void nearTreasureDialog(){
@@ -105,7 +106,7 @@ void nearTreasureDialog(){
                 "Havia uma pequena pérola brilhando na terra que você acabou de cavar, o tesouro está próximo.",
                 "Depois de olhar com mais cuidado você vê há um anel de prata na terra. O tesouro deve estar próximo."
             };
-    std::cout << END << END << Dialogs[random(0,4)] << END;
+    std::cout << END << END << END << END << END << Dialogs[random(0,4)] << END;
 };
 
 void TreasureDialog(){
@@ -130,6 +131,7 @@ void TreasureDialog(){
 //###################################################
 
 void check(int** world, int x, int y, int width, int height){
+    int mines = 0;
     int near[8][2] =
                 {
                 {y-1,x-1}, {y,x-1}, {y+1,x-1},
@@ -144,7 +146,10 @@ void check(int** world, int x, int y, int width, int height){
         {
             if(world[block[1]][block[0]] == 1)
             {
-                world[x][y] = 4;
+                mines++;
+                if(mines>0){
+                    world[x][y]=10+mines;
+                }
             }
             else if(world[block[1]][block[0]] == 5){
                 world[x][y] = 6;
@@ -162,48 +167,48 @@ void checkNear(int **world, int x, int y, int* previous_exploded, int width, int
                 {y-1,x  },        {y+1,x  },
                 {y-1,x+1},{y,x+1},{y+1,x+1}
                 };
-    bool nearDanger = 0;
+
     bool nearTreasure = 0;
     int* mine;
 
     check(world, previous_exploded[1], previous_exploded[0], width, height);
+
     for(int* block:near)
     {
         if(isValid(block[1], block[0], width, height))
         {         
             if(world[block[1]][block[0]] == 1)
             {
-                nearDanger = 1;
                 mine = block;
+                mines++;
             }
             else if(world[block[1]][block[0]] == 5)
             {
                 nearTreasure = 1;
             }
         }
-        if(mines>0){
-            world[x][y]<<mines;
-        }
     }
-    if(nearDanger){
-        if(random(0,6) == 4  && world[x][y]!= 4)
-                {
-                    world[mine[1]][mine[0]] = 3;
-                    nearDangerDialog(4);
-                    check(world, x, y, width, height);
-                    previous_exploded = mine;
-                }
-                else
-                {
-                    mines++;
-                    nearDangerDialog(random(0,3));
-                }
-    } 
+
+    if(mines>0){
+        if(random(0,6) == 6  && world[x][y]!= 4)
+        {
+            world[mine[1]][mine[0]] = 3;
+            nearDangerDialog(4);
+            previous_exploded = mine;
+        }
+        else
+        {
+            nearDangerDialog(random(0,3));
+        }
+        world[x][y]=10+mines;
+    }
+    
     else if(nearTreasure)
     {
         world[x][y] = 6;
         nearTreasureDialog();
     }
+
     else
     {
         digDialog();
@@ -216,7 +221,6 @@ void digBlock(int**world, int x, int y, bool alive, bool rich, int* previous_exp
         {
             world[x][y]==7;
             rich = 1;
-
         }
         else
         {
@@ -225,7 +229,7 @@ void digBlock(int**world, int x, int y, bool alive, bool rich, int* previous_exp
         };
 }
 
-bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int* previous_exploded)//Wont be used if implemented on GUI
+bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int* previous_exploded)
 {   
     int x = (input("Digite a coluna do bloco: ",1))[0];
     int y = (input("Digite a linha do bloco: ",1))[0];
@@ -243,7 +247,9 @@ bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int*
             if(chance==4){
                 alive=1;
             }
+
             deathDialog(chance);
+            world[x][y] = 3;
         }
         else if(rich)
         {
@@ -290,7 +296,7 @@ void printWorld(int** world, int width, int height)
                     std::cout<<"★";
                     break;
                 default:
-                    std::cout<<world[i][j];
+                    std::cout<<(world[i][j])-10;
                     break;
             }
         }
@@ -319,17 +325,6 @@ dimensions selectDimensions(int difficulty){
     return world_dimensions;
 };
 
-int **generateMatrix(int width, int height)
-{
-    int **world = new int*[height];
-    for (int i=0; i<height; i++)
-    {
-        world[i]=new int[width];
-    }
-    
-    return world;
-};
-    
 void **generateWorld(int **world, int width, int height)
 {
     //Mines and Sand
@@ -337,7 +332,7 @@ void **generateWorld(int **world, int width, int height)
     {
         for(int j=0; j<width; j++)
         {
-            if((random(0,3))==1){
+            if((random(0,6))==1){
 
                 world[i][j]=1;
             } 
@@ -352,6 +347,18 @@ void **generateWorld(int **world, int width, int height)
     world[random(0,height)][random(0,width)]=5;
 };
 
+int **generateMatrix(int width, int height)
+{
+    int **world = new int*[height];
+    for (int i=0; i<height; i++)
+    {
+        world[i]=new int[width];
+    }
+    
+    return world;
+};
+
+
 int main()
 {
     int**world;
@@ -359,7 +366,7 @@ int main()
     bool alive=1;
     int previous_exploded[2] = {1,1};
 
-    int difficulty=(input("Dificuldade:\n1: Fácil\n2: Médio\n3: Difícil",1))[0];
+    int difficulty = (input("Dificuldade:\n1: Fácil\n2: Médio\n3: Difícil",1))[0];
     dimensions world_dimensions = selectDimensions(difficulty);
     world = generateMatrix(world_dimensions.width, world_dimensions.height);
     generateWorld(world, world_dimensions.width, world_dimensions.height);
@@ -387,7 +394,6 @@ int main()
             }
             catch(int value)
             {
-                std::cout<<"Ocorreu uma exceção "<<value;
             }
         }
         printWorld(world, world_dimensions.width, world_dimensions.height);
