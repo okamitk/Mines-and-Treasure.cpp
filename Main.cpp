@@ -62,7 +62,7 @@ void deathDialog(int chance){
                 "Você pisou em uma mina. No final a busca pelo tesouro não valeu muita coisa...\n\n Você morreu.",
                 "Enquanto procurava pelo tesouro, você atingiu uma mina com sua pá. 5 segundos se passaram como se fossem horas, mas nada aconteceu.\n\n Você recebeu uma nova chance."
             };
-    std::cout << 
+    std::cout  << END << END << END << END << END <<
         " _____                        _____                \n"
         "|  __ \\                      |  _  |               \n"
         "| |  \\/ __ _ _ __ ___   ___  | | | |_   _____ _ __ \n"
@@ -82,7 +82,10 @@ void digDialog(){
                 "Cavando por vários minutos, a única coisa que você encontrou foi terra e pedras, muitas pedras.",
                 "Você cavou, mas não há nada valioso."
             };
-    std::cout << END << END << END << END << END << Dialogs[random(0,4)] << END;
+    std::cout  << END << END << END << END << END <<
+        "(_) (_) (_) (_) (_)\n"
+        "\n";
+    std::cout << Dialogs[random(0,4)] << END;
 };
 
 void nearDangerDialog(int chance){
@@ -94,7 +97,19 @@ void nearDangerDialog(int chance){
                 "Há polvora misturada na areia que você acabou de cavar. Tem um bomba por perto",
                 "Você bateu forte demais com a pá e sentiu o chão tremer, uma mina explodiu por perto."
             };
-    std::cout << END << END << END << END << END << Dialogs[chance] << END;
+    std::cout  << END << END << END << END << END <<
+        "\n"
+        "\n"
+        " _   _   _   _   _ \n"
+        "| | | | | | | | | |\n"
+        "| | | | | | | | | |\n"
+        "| | | | | | | | | |\n"
+        "|_| |_| |_| |_| |_|\n"
+        "(_) (_) (_) (_) (_)\n"
+        "                   \n"
+        "                   \n"
+        "\n";
+    std::cout << Dialogs[chance] << END;
 };
 
 void nearTreasureDialog(){
@@ -118,7 +133,7 @@ void TreasureDialog(){
                 "Você encontrou uma caixa de madeira coom várias barras de ouro. Você agora, não precisando mais arriscar sua própria vida, vai para casa com cuidado.\n\n Você encontrou o tesouro.",
                 "Você acerta um pedaço de metal com sua pá e toda a sua vida passa diante de seus olhos. Depois de quase desmaiar de medo, você percebe que a tal caixa tem na verdade milhões em pérolas. Você agora vive o resto de sua vida em paz.\n\n Você encontrou o tesouro."
             };
-    std::cout <<
+    std::cout  << END << END << END << END << END <<
         "__   __            _    _ _       _ \n"
         "\\ \\ / /           | |  | (_)     | |\n"
         " \\ V /___  _   _  | |  | |_ _ __ | |\n"
