@@ -2,6 +2,8 @@
 #include <cstdlib>
 
 //##############################################
+//Thanks to ascii-generator.site
+//Thanks to tomeko.net
 //Coded by Okamitk (Francisco Felipe) and available on GitHub
 //The game is set on a matrix called world
 //Every space im world is called a block
@@ -31,6 +33,7 @@ struct difficulty
 };
 
 struct character{
+    int id;
     str profile;
     str near_danger;
     str digging;
@@ -59,180 +62,375 @@ int* input(str message, int amount)
 
 bool isValid(int x, int y, int width, int height)
 {
-    return(x>-1 && x-1<width && y>-1 && y<height);
+    return(x>=0 && x<=width && y>=0 && y<=height);
 };
 
-character createCharacter(){
-    character explorer;
+character createCharacter(int index){
+    character chosen_char;
+    
 
-    explorer.profile =
-    "                                                  \n"
-    "      ██████     ▒▒█████████████████              \n"
-    "      █    ▒█▒  ▒███               ▒█             \n"
-    "      █▒ █▒▒ ▒█▒███▒         ▒▒▒▒▒  ▒█▒           \n"
-    "       █▒▒ ▒█▒██████▒▒▒▒▒▒▒▒▒███▒█▒▒▒██           \n"
-    "         ▒▒█▒███████▒▒▒█▒█▒█▒█▒▒▒█▒▒▒██▒▒▒        \n"
-    "       ▒▒████████████████████████████████████▒▒   \n"
-    "       ████████████████▒███████████▒███████████   \n"
-    "             █████████▒▒▒███▒██▒ ▒▒  █████▒▒▒     \n"
-    "   █████     █████████████▒▒█   ████  ██ █        \n"
-    "  █▒    ██████████████▒████ ▒   ██ █  ██ █▒       \n"
-    " █▒         ▒████████▒ ▒██▒     ██   ████ █       \n"
-    " █            ▒██████                ▒███ █       \n"
-    " █       ██    ▒█▒▒██                 ███ █       \n"
-    " █▒          ▒█▒   ▒██    ██████    ▒███ █        \n"
-    "  █▒    ▒█▒ ▒██     ▒██▒▒          ▒█████ █       \n"
-    "   █▒     ██▒ ▒█▒▒▒    ███▒  ▒▒▒▒████▒ ▒█         \n"
-    "    █▒▒  ▒████▒ ▒█████▒▒▒▒▒███████▒█▒▒▒▒▒         \n"
-    "     ██▒▒█ ▒▒███  ▒█▒▒▒▒▒█▒▒███▒▒▒   ▒█▒          \n"
-    "       ██     ███▒ ▒██▒▒█████▒▒▒▒▒▒▒█▒▒█          \n"
-    "             █▒ ███▒  ▒▒▒ ▒█▒▒▒████▒▒▒█           \n"
-    "            ▒█   ▒██   ▒▒▒▒██▒  ▒▒ ▒███▒▒         \n"
-    "           ▒██     █     ███  █      ▒▒███        \n"
-    "           ██      █▒   ██▒ ▒           ██▒       \n"
-    "                         ▒▒▒                      \n";
+    if(index == 0)
+    {
+            chosen_char.id = 0;
+            chosen_char.profile =
+        "                                                  \n"
+        "      ██████     ▒▒█████████████████              \n"
+        "      █    ▒█▒  ▒███               ▒█             \n"
+        "      █▒ █▒▒ ▒█▒███▒         ▒▒▒▒▒  ▒█▒           \n"
+        "       ███ ▒█▒██████▒▒▒▒▒▒▒▒▒███▒█▒▒▒██           \n"
+        "          ██▒███████▒▒▒█▒█▒█▒█▒▒▒█▒▒▒██▒▒▒        \n"
+        "       ████████████████████████████████████████   \n"
+        "       ████████████████████████████████████████   \n"
+        "             █████████▒▒▒▒▒████▒▒▒▒▒▒█████▒▒▒     \n"
+        "   █████     ███████  ████  █   ████  ██ █        \n"
+        "  █▒    ████████████ █ ████ ▒   ██ █  ██ █▒       \n"
+        " █▒         ▒███████    ██      ██   ████ █       \n"
+        " █            ▒██████                ▒███ █       \n"
+        " █       ██    ▒█▒▒██                 ███ █       \n"
+        " █▒          ▒█▒   ▒██    ██████    ▒███ █        \n"
+        "  █▒    ▒█▒ ▒██     ▒██▒▒          ▒█████ █       \n"
+        "   █▒     ██▒ ▒█▒▒▒    ███▒  ▒▒▒▒████▒ ▒█         \n"
+        "    █▒▒  ▒████▒ ▒█████▒▒▒▒▒███████▒█▒▒▒▒▒         \n"
+        "     ██▒▒█ ▒▒███  ▒█▒▒▒▒▒█▒▒███▒▒▒   ▒█▒          \n"
+        "       ██     ███▒ ▒██▒▒█████▒▒▒▒▒▒▒█▒▒█          \n"
+        "             █▒ ███▒  ▒▒▒ ▒█▒▒▒████▒▒▒█           \n"
+        "            ▒█   ▒██   ▒▒▒▒██▒  ▒▒ ▒███▒▒         \n"
+        "           ▒██     █     ███  █      ▒▒███        \n"
+        "           ██      █▒   ██▒ ▒           ██▒       \n"
+        "                         ▒▒▒                      \n";
 
-    explorer.near_danger =
-    "                 ███                              \n"
-    "               ▒█   █▒                            \n"
-    "              ██  █  █                            \n"
-    "              █  █   █                            \n"
-    "             █▒  █▒▒████████████                  \n"
-    "             █  ▒▒ █ ██████ ▒▒█████               \n"
-    "             █  ███▒ █    █       █               \n"
-    "              ██     █    █      ▒█               \n"
-    "         █████████   █    █ █████████████         \n"
-    "      ▒██     ██  ██  ████▒███▒█▒▒▒▒     ███      \n"
-    "     ▒█        ██████      ▒                █     \n"
-    "     █                 ██                 ▒ █     \n"
-    "      ███             ▒██▒         ▒▒▒▒▒████      \n"
-    "         ██████████████▒▒███████████████          \n"
-    "            █▒▒███    █████     ████   █          \n"
-    "            █  ██ ██████████████ ████  █          \n"
-    "            █ ███ ██ ███████ ███ ██▒█  ▒█         \n"
-    "           █▒ █████████████████   █ █   █         \n"
-    "           █  ███████             █▒█  ▒█         \n"
-    "           ▒█ ██       ██        ▒██ ▒█▒          \n"
-    "            ▒████▒             ▒█████▒            \n"
-    "              ▒▒██▒███████████▒████               \n"
-    "              ▒█▒███     █  ▒▒▒██▒▒█▒             \n"
-    "              ▒   ███▒▒▒ █▒▒▒▒▒▒    ▒▒            \n"
-    "                    █    ▒                        \n";
+        chosen_char.near_danger =
+        "                 ███                              \n"
+        "               ▒█   █▒                            \n"
+        "              ██  █  █                            \n"
+        "              █  █   █                            \n"
+        "             █▒  █▒▒████████████                  \n"
+        "             █  ▒▒ █ ██████ ▒▒█████               \n"
+        "             █  ███▒ █    █       █               \n"
+        "              ██     █    █      ▒█               \n"
+        "         █████████   █    █ █████████████         \n"
+        "      ▒██     ██  ██  ████▒███▒█▒▒▒▒     ███      \n"
+        "     ▒█        ██████      ▒                █     \n"
+        "     █                 ██                 ▒ █     \n"
+        "      ███             ▒██▒         ▒▒▒▒▒████      \n"
+        "         ██████████████▒▒███████████████          \n"
+        "            █▒▒███    █████     ████   █          \n"
+        "            █  ██ ██████████████ ████  █          \n"
+        "            █ ███ ██ ███████ ███ ██▒█  ▒█         \n"
+        "           █▒ ███████▒▒▒▒▒▒▒▒▒▒▒▒▒█ █   █         \n"
+        "           █  ██▒▒▒▒▒             █▒█  ▒█         \n"
+        "           ▒█ ██       ██        ▒██ ▒█▒          \n"
+        "            ▒████▒             ▒█████▒            \n"
+        "              ▒▒██▒███████████▒████               \n"
+        "              ▒█▒███     █  ▒▒▒██▒▒█▒             \n"
+        "              ▒   ███▒▒▒ █▒▒▒▒▒▒    ▒▒            \n"
+        "                    █    ▒                        \n";
 
-    explorer.digging =
-    "                                                  \n"
-    "                                                  \n"
-    "                                                  \n"
-    " █                     ▒█▒▒█▒               █     \n"
-    " █                 █████▒█▒▒█               █     \n"
-    "  █             ███       ▒█▒█              █     \n"
-    "  █           ██ ███        ▒▒█             █     \n"
-    "  █           █▒ ▒▒▒▒▒▒▒▒ ▒ ▒██             █     \n"
-    "  █            ██▒█▒█▒▒█▒█▒▒██              █     \n"
-    "  ██            █ █▒▒  ▒▒█   ███            █     \n"
-    "    ██           █▒██████▒▒██▒ █            █     \n"
-    "     █            ██ ▒▒███   ███           ██     \n"
-    "     ██          █ ▒█▒█  █▒█▒ █           ██      \n"
-    "      █         ████▒▒█▒▒▒▒█  █          ██       \n"
-    "      ██      ██  ▒▒▒█   ▒█▒██▒         ██        \n"
-    "       █      █ ▒▒▒███▒███  ██         █          \n"
-    "       ██   ██████▒▒ █ ▒██  ██       ██           \n"
-    "         █ ██ ██ ▒█  ██▒ ████      ██             \n"
-    "          █████████████████████████               \n";
+        chosen_char.digging =
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        " █                     ▒█▒▒█▒               █     \n"
+        " █                 █████▒█▒▒█               █     \n"
+        "  █             ███       ▒█▒█              █     \n"
+        "  █           ██ ███        ▒▒█             █     \n"
+        "  █           ██████████████████            █     \n"
+        "  █            ██ █ █  █ █   ██             █     \n"
+        "  ██            █ █      █   ███            █     \n"
+        "    ██           █▒██████▒▒██▒ █            █     \n"
+        "     █            ██ ▒▒███   ███           ██     \n"
+        "     ██          █ ▒█▒█  █▒█▒ █           ██      \n"
+        "      █         ████▒▒█▒▒▒▒█  █          ██       \n"
+        "      ██      ██  ▒▒▒█   ▒█▒██▒         ██        \n"
+        "       █      █ ▒▒▒███▒███  ██         █          \n"
+        "       ██   ██████▒▒ █ ▒██  ██       ██           \n"
+        "         █ ██ ██ ▒█  ██▒ ████      ██             \n"
+        "          █████████████████████████               \n";
 
-    explorer.exploding =
-    "                                                  \n"
-    "         ▒       ▒   ▒                            \n"
-    "                 █                                \n"
-    "                █ █    █                 ▒▒▒      \n"
-    "                █ █                    ▒███▒▒     \n"
-    "      ▒     ▒   █ █                 ▒▒▒███▒       \n"
-    "          ▒ █▒  █  █               ███████        \n"
-    "            ██▒ █  █               █████          \n"
-    " ▒          █ █ █  █           ▒ ▒██████          \n"
-    "            █  █   █          ▒▒███▒▒▒▒       ▒▒  \n"
-    "    ▒    ▒  █  ▒   █▒ ▒█    ▒▒ ▒██▒          ▒███ \n"
-    "            █       █▒██  ▒▒ ▒████       █▒▒▒█████\n"
-    "            █       █▒ █▒▒  █████▒       ████████ \n"
-    "      ████  █          ▒  ▒███            ██████▒ \n"
-    "       ▒█▒███            ▒███▒▒▒    ▒▒▒  ██████▒  \n"
-    "        ▒█      ▒▒▒▒    ▒▒▒          ███████▒▒    \n"
-    "         ██    █▒  ▒▒█  ▒▒▒▒▒       ██████▒▒      \n"
-    "       ▒▒▒██            ▒   █  ▒▒▒▒▒█████▒        \n"
-    "    ▒▒▒███████▒       ▒▒▒▒█▒▒▒▒█████████▒         \n"
-    "             ▒█  █▒▒██              ▒▒▒▒          \n"
-    "              ▒█▒█                                \n"
-    "                ▒                                 \n";
+        chosen_char.exploding =
+        "                                                  \n"
+        "         ▒       ▒   ▒                            \n"
+        "                 █                                \n"
+        "                █ █    █                 ▒▒▒      \n"
+        "                █ █                    ▒███▒▒     \n"
+        "      ▒     ▒   █ █                 ▒▒▒███▒       \n"
+        "          ▒ █▒  █  █               ███████        \n"
+        "            ██▒ █  █               █████          \n"
+        " ▒          █ █ █  █           ▒ ▒██████          \n"
+        "            █  █   █          ▒▒███▒▒▒▒       ▒▒  \n"
+        "    ▒    ▒  █  ▒   █▒ ▒█    ▒▒ ▒██▒          ▒███ \n"
+        "            █       █▒██  ▒▒ ▒████       █▒▒▒█████\n"
+        "            █       █▒ █▒▒  █████▒       ████████ \n"
+        "      ████  █          ▒  ▒███            ██████▒ \n"
+        "       ▒█▒███            ▒███▒▒▒    ▒▒▒  ██████▒  \n"
+        "        ▒█      ▒▒▒▒    ▒▒▒          ███████▒▒    \n"
+        "         ██    █▒  ▒▒█  ▒▒▒▒▒       ██████▒▒      \n"
+        "       ▒▒▒██            ▒   █  ▒▒▒▒▒█████▒        \n"
+        "    ▒▒▒███████▒       ▒▒▒▒█▒▒▒▒█████████▒         \n"
+        "             ▒█  █▒▒██              ▒▒▒▒          \n"
+        "              ▒█▒█                                \n"
+        "                ▒                                 \n";
 
-    explorer.finding_treasure = 
-    "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
-    "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
-    "           █                         █            \n"
-    "           █            ▒▒▒█▒▒▒▒█▒   █            \n"
-    "           █▒█▒▒▒▒▒▒█▒▒█▒▒▒ ▒▒▒▒ ▒█▒ █            \n"
-    "          █████████████████████████████           \n"
-    "          █ █▒▒▒▒▒▒▒ █ ██ █   ▒▒▒▒▒▒█▒█           \n"
-    "       █▒▒█▒▒        ██████           █           \n"
-    "       ▒▒▒█▒█                       █▒█           \n"
-    "     ▒█▒▒██ ▒▒█████████████████████████▒█▒▒█▒     \n"
-    "     ▒█   ▒▒█▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒███ ▒█▒▒   █▒     \n"
-    "      ▒█▒  ▒▒ ▒███▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▒  ▒   ▒█▒      \n"
-    "        ██▒▒   ███████████████████▒   ▒▒██        \n"
-    "        █▒ ▒▒▒▒███▒▒█▒▒▒▒ █▒ ██▒ ██▒▒▒▒ ▒█        \n"
-    "         █     ██   ▒█ ▒ █▒   ██▒ █     █         \n"
-    "         █▒    ██  ▒█     █▒  █▒█ █    ▒█         \n"
-    "          █     █  ▒▒▒▒▒▒▒▒▒█ ▒▒██▒    ██         \n"
-    "          ▒█    ██ █████████▒  ███    ▒█▒         \n"
-    "           █    ▒██▒███████▒▒▒▒██▒    █▒          \n"
-    "           ▒█    ▒▒█▒▒▒█     ▒▒▒█    █▒           \n"
-    "            █      █   █▒▒▒▒▒▒▒▒     █            \n"
-    "            ▒▒     █   █▒█▒▒▒▒▒     █▒            \n"
-    "             ▒     █   █ █          ▒             \n"
-    "                   █   █ █                        \n"
-    "                   ▒   ▒                          \n";
+        chosen_char.finding_treasure = 
+        "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
+        "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
+        "           █                         █            \n"
+        "           █            ▒▒▒█▒▒▒▒█▒   █            \n"
+        "           █▒█▒▒▒▒▒▒█▒▒█▒▒▒ ▒▒▒▒ ▒█▒ █            \n"
+        "          █████████████████████████████           \n"
+        "          █ █▒▒▒▒▒▒▒ █ ██ █   ▒▒▒▒▒▒█▒█           \n"
+        "       █▒▒█▒▒        ██████           █           \n"
+        "       ▒▒▒█▒█                       █▒█           \n"
+        "     ▒█▒▒██ ▒▒█████████████████████████▒█▒▒█▒     \n"
+        "     ▒█   ▒▒█▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒███ ▒█▒▒   █▒     \n"
+        "      ▒█▒  ▒▒ ▒███▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▒  ▒   ▒█▒      \n"
+        "        ██▒▒   ███████████████████▒   ▒▒██        \n"
+        "        █▒ ▒▒▒▒███▒▒█▒▒▒▒ █▒ ██▒ ██▒▒▒▒ ▒█        \n"
+        "         █     ██   ▒█ ▒ █▒   ██▒ █     █         \n"
+        "         █▒    ██  ▒█     █▒  █▒█ █    ▒█         \n"
+        "          █     █  ▒▒▒▒▒▒▒▒▒█ ▒▒██▒    ██         \n"
+        "          ▒█    ██ █████████▒  ███    ▒█▒         \n"
+        "           █    ▒██▒███████▒▒▒▒██▒    █▒          \n"
+        "           ▒█    ▒▒█▒▒▒█     ▒▒▒█    █▒           \n"
+        "            █      █   █▒▒▒▒▒▒▒▒     █            \n"
+        "            ▒▒     █   █▒█▒▒▒▒▒     █▒            \n"
+        "             ▒     █   █ █          ▒             \n"
+        "                   █   █ █                        \n"
+        "                   ▒   ▒                          \n";
 
-    explorer.near_treasure = 
-    "                                                  \n"
-    "                                                  \n"
-    "                                                  \n"
-    "     ▒▒▒▒                                         \n"
-    "     █ ▒ ▒▒▒                                      \n"
-    "     █  ▒▒ ▒▒▒                                    \n"
-    "      ▒▒▒▒▒▒▒█▒▒▒▒▒▒▒███▒                         \n"
-    "           ████▒▒▒▒▒▒█▒▒▒▒                        \n"
-    "        ▒▒█▒██         ▒▒█▒▒▒▒            ▒▒▒▒    \n"
-    "      ▒█████▒▒█▒█▒█▒▒█▒▒▒▒    ▒▒         █    █   \n"
-    "      ████████████▒▒▒▒▒▒      ▒▒         █    █   \n"
-    "      ▒██████▒             ▒▒▒           ▒▒  ▒▒   \n"
-    "         ████████▒▒▒▒▒▒▒██▒█▒             █  █    \n"
-    "        ▒████▒██▒▒▒▒▒   ▒ █▒ █            ▒▒▒▒    \n"
-    "        █████ ██ ▒ ██   █ ▒█ █             ▒▒     \n"
-    "        █████ ██   ▒▒      █ █            █  █    \n"
-    "        █████▒██      ▒   ▒█ █            ▒█▒     \n"
-    "         ████████▒▒▒▒▒▒▒▒▒▒▒█           ▒▒▒ █▒▒▒  \n"
-    "        ▒▒█████▒▒▒█▒▒▒▒▒▒▒▒█▒         ▒▒█ ▒██  █  \n"
-    "       █▒▒█████   ▒▒▒▒██████       ▒▒▒  ██▒▒▒▒▒   \n"
-    "      ▒█▒ ▒███ █▒▒ ██▒▒     ▒▒▒▒▒▒▒     ▒███▒     \n"
-    "      ██   ███ █   ██                     █▒      \n"
-    "       ██▒████ █   ██     ██▒▒          ▒▒        \n"
-    "       ▒  ▒▒       ▒▒      ▒▒██▒    ▒▒▒▒          \n"
-    "                              ▒▒▒▒▒▒              \n";
-
-    return explorer;
+        chosen_char.near_treasure = 
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        "     ▒▒▒▒                                         \n"
+        "     █ ▒ ▒▒▒                                      \n"
+        "     █  ▒▒ ▒▒▒                                    \n"
+        "      ▒▒▒▒▒▒▒█▒▒▒▒▒▒▒███▒                         \n"
+        "           ████▒▒▒▒▒▒█▒▒▒▒                        \n"
+        "        ▒▒█▒██         ▒▒█▒▒▒▒            ▒▒▒▒    \n"
+        "      ▒█████▒▒█▒█▒█▒▒█▒▒▒▒    ▒▒         █    █   \n"
+        "      ████████████▒▒▒▒▒▒      ▒▒         █    █   \n"
+        "      ▒██████▒             ▒▒▒           ▒▒  ▒▒   \n"
+        "         ████████▒▒▒▒▒▒▒██▒█▒             █  █    \n"
+        "        ▒████▒██▒▒▒▒▒   ▒ █▒ █            ▒▒▒▒    \n"
+        "        █████ ██ ▒ ██   █ ▒█ █             ▒▒     \n"
+        "        █████ ██   ▒▒      █ █            █  █    \n"
+        "        █████▒██      ▒   ▒█ █            ▒█▒     \n"
+        "         ████████▒▒▒▒▒▒▒▒▒▒▒█           ▒▒▒ █▒▒▒  \n"
+        "        ▒▒█████▒▒▒█▒▒▒▒▒▒▒▒█▒         ▒▒█ ▒██  █  \n"
+        "       █▒▒█████   ▒▒▒▒██████       ▒▒▒  ██▒▒▒▒▒   \n"
+        "      ▒█▒ ▒███ █▒▒ ██▒▒     ▒▒▒▒▒▒▒     ▒███▒     \n"
+        "      ██   ███ █   ██                     █▒      \n"
+        "       ██▒████ █   ██     ██▒▒          ▒▒        \n"
+        "       ▒  ▒▒       ▒▒      ▒▒██▒    ▒▒▒▒          \n"
+        "                              ▒▒▒▒▒▒              \n";
+    }
+    else if(index == 1)
+    {
+        chosen_char.id = 1;
+        chosen_char.digging = 
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        " █                   ███                    █     \n"
+        " █               ████   █████               █     \n"
+        "  █             █   █   █    █              █     \n"
+        "  █            █     ███      █             █     \n"
+        "  █          ███████████████████            █     \n"
+        "  █             █  █    █   ███             █     \n"
+        "  ██            █ ▒ ██   ▒   ██             █     \n"
+        "    ██           █  █  █     ██             █     \n"
+        "     █            █▒█▒▒█▒▒▒▒▒█             ██     \n"
+        "     ██          █ ▒█▒█  █▒█▒ █           ██      \n"
+        "      █         ████▒▒█▒▒▒▒█  █          ██       \n"
+        "      ██      ██  ▒▒▒█   ▒█▒██▒         ██        \n"
+        "       █      █ ▒▒▒███▒███  ██         █          \n"
+        "       ██   ██████▒▒ █ ▒██  ██       ██           \n"
+        "         █ ██ ██ ▒█  ██▒ ████      ██             \n"
+        "          █████████████████████████               \n";
+        chosen_char.exploding =
+        "                                                  \n"
+        "         ▒       ▒   ▒                            \n"
+        "                 █                                \n"
+        "                █ █    █                 ▒▒▒      \n"
+        "                █ █                    ▒███▒▒     \n"
+        "      ▒     ▒   █ █                 ▒▒▒███▒       \n"
+        "          ▒ █▒  █  █               ███████        \n"
+        "            ██▒ █  █               █████          \n"
+        " ▒          █ █ █  █           ▒ ▒██████          \n"
+        "            █  █   █          ▒▒███▒▒▒▒       ▒▒  \n"
+        "    ▒    ▒  █  ▒   █▒ ▒█    ▒▒ ▒██▒          ▒███ \n"
+        "            █       █▒██  ▒▒ ▒████       █▒▒▒█████\n"
+        "            █       █▒ █▒▒  █████▒       ████████ \n"
+        "      ████  █          ▒  ▒███            ██████▒ \n"
+        "       ▒█▒███            ▒███▒▒▒    ▒▒▒  ██████▒  \n"
+        "        ▒█      ▒▒▒▒    ▒▒▒          ███████▒▒    \n"
+        "         ██    █▒  ▒▒█  ▒▒▒▒▒       ██████▒▒      \n"
+        "       ▒▒▒██            ▒   █  ▒▒▒▒▒█████▒        \n"
+        "    ▒▒▒███████▒       ▒▒▒▒█▒▒▒▒█████████▒         \n"
+        "             ▒█  █▒▒██              ▒▒▒▒          \n"
+        "              ▒█▒█                                \n"
+        "                ▒                                 \n";
+        chosen_char.finding_treasure =
+        "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
+        "          █▒▒▒▒▒▒▒▒▒▒█▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒█           \n"
+        "           █                         █            \n"
+        "           █            ▒▒▒█▒▒▒▒█▒   █            \n"
+        "           █▒█▒▒▒▒▒▒█▒▒█▒▒▒ ▒▒▒▒ ▒█▒ █            \n"
+        "          █████████████████████████████           \n"
+        "          █ █▒▒▒▒▒▒▒ █ ██ █   ▒▒▒▒▒▒█▒█           \n"
+        "       █▒▒█▒▒        ██████           █           \n"
+        "       ▒▒▒█▒█                       █▒█           \n"
+        "     ▒█▒▒██ ▒▒█████████████████████████▒█▒▒█▒     \n"
+        "     ▒█   ▒▒█▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒███ ▒█▒▒   █▒     \n"
+        "      ▒█▒  ▒▒ ▒███▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▒  ▒   ▒█▒      \n"
+        "        ██▒▒   ███████████████████▒   ▒▒██        \n"
+        "        █▒ ▒▒▒▒███▒▒█▒▒▒▒ █▒ ██▒ ██▒▒▒▒ ▒█        \n"
+        "         █     ██   ▒█ ▒ █▒   ██▒ █     █         \n"
+        "         █▒    ██  ▒█     █▒  █▒█ █    ▒█         \n"
+        "          █     █  ▒▒▒▒▒▒▒▒▒█ ▒▒██▒    ██         \n"
+        "          ▒█    ██ █████████▒  ███    ▒█▒         \n"
+        "           █    ▒██▒███████▒▒▒▒██▒    █▒          \n"
+        "           ▒█    ▒▒█▒▒▒█     ▒▒▒█    █▒           \n"
+        "            █      █   █▒▒▒▒▒▒▒▒     █            \n"
+        "            ▒▒     █   █▒█▒▒▒▒▒     █▒            \n"
+        "             ▒     █   █ █          ▒             \n"
+        "                   █   █ █                        \n"
+        "                   ▒   ▒                          \n";
+        chosen_char.near_danger =
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        "                 ▒▒████████████                   \n"
+        "               ████████ ▒▒█████████               \n"
+        "             ██                   ██              \n"
+        "           ███                     ██             \n"
+        "         ███         █████          █████         \n"
+        "      ▒██  █        █     █           █  ███      \n"
+        "     ▒█    █       █▒      █           █    █     \n"
+        "     █     █        █     █           █   ▒ █     \n"
+        "      ███            █████         ▒▒▒▒    █      \n"
+        "         ██████████████▒▒██████████████████       \n"
+        "            █████     █████     ███████           \n"
+        "            ███████████████████████████           \n"
+        "            ███████ ████████ ██████  ▒█           \n"
+        "            ██████████    ▒▒▒▒▒▒▒▒   █            \n"
+        "            ████▒▒▒▒▒██████        ▒█             \n"
+        "             █      █      █      ▒██             \n"
+        "              ██  ▒ █      █    ▒ ██              \n"
+        "              ▒▒██▒███████████▒████               \n"
+        "              ▒█▒███     █  ▒▒▒██▒▒█▒             \n"
+        "              ▒   ███▒▒▒ █▒▒▒▒▒▒    ▒▒            \n"
+        "                    █    ▒                        \n";
+        chosen_char.near_treasure =
+        "                                                  \n"
+        "                                                  \n"
+        "                                                  \n"
+        "     ▒▒▒▒                                         \n"
+        "     █ ▒ ▒▒▒                                      \n"
+        "     █  ▒▒ ▒▒▒                                    \n"
+        "      ▒▒▒▒▒▒▒█▒▒▒▒▒▒▒███▒                         \n"
+        "           ████▒▒▒▒▒▒█▒▒▒▒                        \n"
+        "        ▒▒█▒██         ▒▒█▒▒▒▒            ▒▒▒▒    \n"
+        "      ▒█████▒▒█▒█▒█▒▒█▒▒▒▒    ▒▒         █    █   \n"
+        "      ████████████▒▒▒▒▒▒      ▒▒         █    █   \n"
+        "      ▒██████▒             ▒▒▒           ▒▒  ▒▒   \n"
+        "         ████████▒▒▒▒▒▒▒██▒█▒             █  █    \n"
+        "        ▒████▒██▒▒▒▒▒   ▒ █▒ █            ▒▒▒▒    \n"
+        "        █████ ██ ▒ ██   █ ▒█ █             ▒▒     \n"
+        "        █████ ██   ▒▒      █ █            █  █    \n"
+        "        █████▒██      ▒   ▒█ █            ▒█▒     \n"
+        "         ████████▒▒▒▒▒▒▒▒▒▒▒█           ▒▒▒ █▒▒▒  \n"
+        "        ▒▒█████▒▒▒█▒▒▒▒▒▒▒▒█▒         ▒▒█ ▒██  █  \n"
+        "       █▒▒█████   ▒▒▒▒██████       ▒▒▒  ██▒▒▒▒▒   \n"
+        "      ▒█▒ ▒███ █▒▒ ██▒▒     ▒▒▒▒▒▒▒     ▒███▒     \n"
+        "      ██   ███ █   ██                     █▒      \n"
+        "       ██▒████ █   ██     ██▒▒          ▒▒        \n"
+        "       ▒  ▒▒       ▒▒      ▒▒██▒    ▒▒▒▒          \n"
+        "                              ▒▒▒▒▒▒              \n";
+        chosen_char.profile =
+        "                        ████████                  \n"
+        "            █████████████      █████████          \n"
+        "          ██▒▒▒▒▒▒▒▒▒▒██        ██▒▒▒▒▒██▒        \n"
+        "         ██▒▒▒▒▒▒▒▒▒▒▒██        ██▒▒▒▒▒▒██        \n"
+        "         ██▒▒▒▒▒▒▒▒▒▒▒▒██      ██▒▒▒▒▒▒▒██▒       \n"
+        "       ███              ▒██████▒         ▒███     \n"
+        "     ██      ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ██   \n"
+        "   ██   ██ ▒▒████████████████████████████  ██  ██ \n"
+        "   ███████████   ███████        ██████  ▒██▒█████  \n"
+        "        ████       ███            ███   ▒████     \n"
+        "        ████       ███   ██████   ███    ▒███     \n"
+        "        ████      ▒    ██      ██  ▒▒▒   ▒███     \n"
+        "        ████     ▒    ▒██▒▒▒▒▒▒██     ▒▒████      \n"
+        "         ████     ▒▒███████████████▒   ███▒       \n"
+        "          ███    █████▒▒▒▒▒▒▒▒▒▒▒████  ███        \n"
+        "          ███    ███▒            ▒███  ███        \n"
+        "           ███▒  ███              ███ ▒██▒        \n"
+        "           ██████████████████████████████▒        \n"
+        "          █████                  ▒██    ████▒     \n"
+        "       ▒███▒ ██      ███████████████    ██ ██▒    \n"
+        "         ███████████▒▒▒▒▒▒▒▒▒▒  ██    ██  ██▒     \n"
+        "         ███                   ██    ██   ██      \n"
+        "             ███████████████████████    ██        \n"
+        "                                   ████████       \n"
+        "                                      ▒▒▒         \n";
+        
+    }
+    else if(index == 2)
+    {
+        chosen_char.id = 2;
+        chosen_char.digging = 
+        "";
+        chosen_char.exploding =
+        "";
+        chosen_char.finding_treasure =
+        "";
+        chosen_char.near_danger =
+        "";
+        chosen_char.near_treasure =
+        "";
+        chosen_char.profile =
+        "";
+    }
+    return chosen_char;
 };
 
-const character explorer = createCharacter();
+character chooseCharacter(){
+    character chosen_char;
+    int char_index = 0;
+    while(char_index<1 || char_index>3)
+    {
+        char_index = (input("Escolha um personagem:\n1: Aventureiro\n2: Mineiro\n3: Soldado (Sem Sprites)", 1))[0];
+    }
+    chosen_char = createCharacter(char_index - 1);
+    return chosen_char;
+}
+
 //#################################################
-void storyDialog(int index)
+void startDialog(character chosen_char)
 {
-    str Dialogs[10] =
+    str Dialogs[3]{
+        "O ano é 195X, e você é um aventureiro, no entanto não há mais nada para ser explorado. Sem forças e vivendo na miséria você decide tomar medidas extremas.",
+        "O ano é 195X, você é um experiente mineiro. Agora sem forças para trabalhar e vivendo na miséria, você decide tomar medidas extremas.",
+        "O ano é 195X, você é um soldado de menor escalão mandado para explorar e recuperar objetos importantes perdidos em um estreito que um dia foi palco de um incidente."
+    };
+    std::cout << chosen_char.profile << END;
+    std::cout << Dialogs[chosen_char.id] << END;
+};
+
+void storyDialog(int index, int char_index)
+{
+    str Dialogs[6] =
             {
-                 "O clima não está bom hoje, na verdade nunca esteve desde o início da guerra. \nEstamos empobrecendo a cada dia",
-                 "Lembrar da sua esposa, padecendo por uma doença desconhecida te dá ânimo de continuar escavando ao mesmo tempo em que te deixa triste.",
-                 "O terreno em que você está procurando este tesouro já foi o leito de um rio relativamente raso. \nSoldados e algumas máquinas estranhas passavam diariamente sobre este solo, era uma área bem disputada.",
-                 "A 7 anos atrás, um convoio destruído por algumas das minas que estão aqui. \nA carga valiosa foi enterrada por alguns dos sobreviventes por ser pesada demais. \nApós perderem a guerra, ninguém nunca mais veio aqui em busca desse tesouro. \nProvavelmente dá para repartir e levar um pouco dessa carga de cada vez.",
-                 "Existem diversas peças destruídas e retorcidas espalhadas pelo chão. \nA distância entre cada uma delas é tão grande que é difícil acreditar que tenha sido essas minas que fez isso."
+                 "O terreno em que você está procurando este tesouro já foi o leito de um rio relativamente raso. \nSoldados e máquinas passavam diariamente, era uma área bem disputada.",
+                 "A mais de 20 anos atrás, um convoio foi destruído por algumas das minas que estão aqui. \nA carga valiosa foi enterrada por alguns dos sobreviventes por ser pesada demais. \n Mas ninguém do exército jamais veio aqui novamente.",
+                 "Há diversas peças destruídas e retorcidas espalhadas pelo chão. \nA distância entre cada uma delas é tão grande que é difícil acreditar que tenha sido essas minas que fez isso.",
+                 "Há rumores de que o tesouro tenha joias e dinheiro, além de alguns documentos e projetos. \n Tudo que estava na superfície já foi vasculhado.",
+                 "Não existem pontes ness região. A maior que já existiu por aqui foi alvo de um ataque.\nEla era tão grande que os destroços foram suficientes para desviar o percusso do rio.",
+                 "O projeto do maior bombardeiro do reino um dia esteve aqui. Ele já deve ter sido reduzido à cinzas a muito tempo."
             };
+    std::cout << END << Dialogs[index] << END;
 };
 
 void deathDialog(int chance){
@@ -250,25 +448,29 @@ void deathDialog(int chance){
 void digDialog(){
     str Dialogs[5] =
             {
-                "Você cavou, cavou e cavou mas não encontrou nada.",
-                "Depois de cavar por algum tempo você não encontrou nada.",
-                "Não há nada aqui.",
+                "Você arrisca sua vida a cada pá de areia e terra, mas não encontra nada.",
+                "Depois de cavar por algum tempo você não encontrou ou sentiu nada.",
+                "Seja isso bom ou ruim, não há nada aqui.",
                 "Cavando por vários minutos, a única coisa que você encontrou foi terra e pedras, muitas pedras.",
-                "Você cavou, mas não há nada valioso."
             };
     std::cout << Dialogs[random(0,4)] <<END;
 };
 
-void nearDangerDialog(int chance){
-    str  Dialogs[5] =
+void nearDangerDialog(){
+    str  Dialogs[10] =
             {
                 "Você pode sentir o cheiro de pólvora vindo das paredes da escavação. Há uma mina por perto.",
                 "Você sente um calafrio horrível. Tem algo próximo.",
                 "Você consegue ouvir o impacto da sua pá ecoando em alguma mina próxima.",
-                "Há polvora misturada na areia que você acabou de cavar. Tem um bomba por perto",
-                "Você bateu forte demais com a pá e sentiu o chão tremer, uma mina explodiu por perto."
+                "Há polvora misturada na areia que você acabou de cavar. Tem um bomba perto.",
+                "Você ouve um tick. Sem nenhuma explosão, você percebe que há uma mina por perto.",
+                "Graças à adrenalina, você consegue distinguir os sons de sua pá ecoando sob a terra como um sonar. Há uma mina perto.",
+                "Graças aos anos de experiência, você consegue ver indícios de metais anormais na terra ao se aproximar muito do solo.",
+                "A terra que você está cavando parece anormalmente fofa, alguém já cavou aqui antes. Há uma mina próxima."
+                "As camadas de terra e pedras estão anormalmente misturadas, como se alguém já tivesse cavado aqui antes. Há uma mina próxima.",
+                "Você encontra uma pequena estaca com uma caveira nas paredes da escavação, há uma mina por perto."
             };
-    std::cout << Dialogs[chance] << END;
+    std::cout << Dialogs[random(0,9)] << END;
 };
 
 void nearTreasureDialog(){
@@ -309,7 +511,7 @@ void check(int** world, int x, int y, int width, int height)
     world[x][y]=2;
     for(int* block:near)
     {
-        if(isValid(x, y, width, height))
+        if(isValid(block[1],block[0], width, height))
         {
             if(world[block[1]][block[0]] == 1)
             {
@@ -327,7 +529,7 @@ void check(int** world, int x, int y, int width, int height)
     };
 };
 
-void checkNear(int** world, int x, int y, int width, int height, int chances)
+void checkNear(int** world, int x, int y, int width, int height, int chances, character chosen_char)
 {
     int* mine;
     int mines = 0;
@@ -357,8 +559,8 @@ void checkNear(int** world, int x, int y, int width, int height, int chances)
     if(mines>0)
         {
             system("clear");
-            std::cout << explorer.near_danger;
-            nearDangerDialog(random(0,3));
+            std::cout << chosen_char.near_danger;
+            nearDangerDialog();
             if(random(0,chances)==1)
             {
                 world[mine[1]][mine[0]] = 3;
@@ -373,12 +575,12 @@ void checkNear(int** world, int x, int y, int width, int height, int chances)
         else
         {
             system("clear");
-            std::cout << explorer.digging;
+            std::cout << chosen_char.digging;
             digDialog();
         }
 };
 
-void digBlock(int**world, int x, int y, bool alive, bool rich, int width, int height, int chances)
+void digBlock(int**world, int x, int y, bool alive, bool rich, int width, int height, int chances, character chosen_char)
 {
     if (world[x][y]==5)
     {
@@ -388,11 +590,11 @@ void digBlock(int**world, int x, int y, bool alive, bool rich, int width, int he
     else
     {
         world[x][y]=2;
-        checkNear(world, x, y, width, height, chances);
+        checkNear(world, x, y, width, height, chances, chosen_char);
     };
 }
  
-bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int chances)
+bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int chances, character chosen_char)
 {
     int x = (input("Digite a coluna do bloco: ", 1))[0];
     int y = (input("Digite a linha do bloco: ", 1))[0];
@@ -406,22 +608,22 @@ bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int 
         alive = (world[x][y] != 1);
         if(alive && !rich)
         {
-            digBlock(world, x, y, alive, rich, width, height, chances);
+            digBlock(world, x, y, alive, rich, width, height, chances, chosen_char);
         }
         else if(!alive)
         {
-            if(chance==4){
+            if(chance==chances){
                 alive=1;
             }
             system("clear");
-            std::cout << explorer.exploding;
+            std::cout << chosen_char.exploding;
             deathDialog(chance);
             world[x][y] = 3;
         }
         else if(rich)
         {
             system("clear");
-            std::cout << explorer.near_treasure;
+            std::cout << chosen_char.near_treasure;
             TreasureDialog();
         }
     }
@@ -431,39 +633,23 @@ bool chooseBlock(int** world, bool alive, bool rich, int width, int height, int 
     }
     return alive;
 }
+
 void worldOut(int** world, int width, int height)
 {
+    str blocks[8] = {"█", "█", " ", " ", "X", "█", "✦", "★"};
+    std::cout << END;
     for(int i = 0; i < height; i++)
     {
         std::cout << i+1 << " ";
         for(int j = 0; j < width; j++)
         {
-            switch(world[i][j])
+            if(world[i][j]<10)
             {
-                case 0:
-                    std::cout<<"█";
-                    break;
-                case 1:
-                    std::cout<<"█";
-                    break;
-                case 2:
-                    std::cout<<" ";
-                    break;
-                case 3:
-                    std::cout<<"X";
-                    break;
-                case 5:
-                    std::cout<<"█";
-                    break;
-                case 6:
-                    std::cout<<"✦";
-                    break;
-                case 7:
-                    std::cout<<"★";
-                    break;
-                default:
-                    std::cout<<(world[i][j])-10;
-                    break;
+                std::cout << blocks[world[i][j]];
+            }
+            else
+            {
+                std::cout << world[i][j]-10;
             }
         }
         std::cout<<END;
@@ -527,6 +713,11 @@ void **generateWorld(int **world, difficulty level)
     world[1][1]=0;
     world[2][0]=0;
     world[3][0]=0;
+    world[7][7]=0;
+    world[6][7]=0;
+    world[8][7]=0;
+    world[7][6]=0;
+    world[7][8]=0;
 
     check(world, 0, 0, width, height);
     check(world, 0, 1, width, height);
@@ -534,6 +725,11 @@ void **generateWorld(int **world, difficulty level)
     check(world, 1, 0, width, height);
     check(world, 1, 1, width, height);
     check(world, 2, 0, width, height);
+    check(world, 4, 4, width, height);
+    check(world, 3, 4, width, height);
+    check(world, 5, 4, width, height);
+    check(world, 4, 3, width, height);
+    check(world, 4, 5, width, height);
 
     if(level.treasure_quantity==2)
     {
@@ -562,8 +758,9 @@ int main()
     int**world;
     bool rich = 0;
     bool alive = 1;
-    int counter;
+    int counter = 0;
     char enter;
+    character chosen_char;
 
     difficulty level = selectDifficulty();
     world = generateMatrix(level.width, level.height);
@@ -586,21 +783,24 @@ int main()
         std::cin >> enter;
 
         system("clear");
-
-        std::cout << explorer.profile << END
-                  << "Você é um pobre jovem, vivendo em uma vila isolada."
-                  << "Com a vida e o trabalhado assolados pelo frio, fome e doenças, você decide que irá tomar medidas extremas."
-                  << END
-                  << "Pressione ENTER";
+        chosen_char = chooseCharacter();
+        startDialog(chosen_char);
 
         std::cin >> enter;
 
         system("clear");
+        
+        std::cout << "Há alguns buracos feitos por visitantes anteriores. Use-os ao seu favor." << END;
 
         while(alive && !rich)
         {
             worldOut(world, level.width, level.height);
-            chooseBlock(world, alive, rich, level.width, level.height, level.near_explosion_rate);
+            chooseBlock(world, alive, rich, level.width, level.height, level.near_explosion_rate, chosen_char);
+            if(counter<6)
+            {
+                storyDialog(counter, chosen_char.id);
+                counter++;
+            }
         }
 
         return 0;
